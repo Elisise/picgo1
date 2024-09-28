@@ -1,0 +1,72 @@
+mode: rule
+redir-port: 7892
+mixed-port: 7890
+allow-lan: false
+log-level: info
+secret: ''
+external-controller: 127.0.0.1:9097
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+  - 8.8.4.4
+  - 1.1.1.1
+  prefer-h3: true
+  default-nameserver:
+  - 223.5.5.5
+  nameserver-policy:
+    http-inputs-notion.splunkcloud.com,+.notion-static.com,+.notion.com,+.notion.new,+.notion.site,+.notion.so: tls://dns.jerryw.cn
+    geosite:cn:
+    - system
+    - 119.29.29.29
+    - 223.5.5.5
+    - 180.184.1.1
+    - 180.76.76.76
+    - 114.114.114.114
+  proxy-server-nameserver:
+  - tls://8.8.4.4
+  fallback: []
+  fake-ip-filter:
+  - dns.msftncsi.com
+  - www.msftncsi.com
+  - www.msftconnecttest.com
+tcp-concurrent: true
+geo-update-interval: 24
+unified-delay: true
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports:
+      - 443
+      - 8443
+    HTTP:
+      ports:
+      - 80
+      - 8080-8880
+      override-destination: true
+geodata-mode: true
+geo-auto-update: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+find-process-mode: strict
+geodata-loader: standard
+geox-url:
+  geoip: https://fastgh.lainbo.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
+  geosite: https://fastgh.lainbo.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://fastgh.lainbo.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
+tun:
+  stack: mixed
+  device: Meta
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+  - any:53
+  strict-route: true
+  mtu: 1500
+  enable: true
+
